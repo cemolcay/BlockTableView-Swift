@@ -12,7 +12,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        createMultiSectionTableView()
+        createSingleSectionTableView()
+//        createMultiSectionTableView()
     }
 
     override func didReceiveMemoryWarning() {
