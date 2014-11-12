@@ -10,7 +10,6 @@ Usage
 Copy & paste BlockTableView.swift into your project. <br>
 
         let table = BlockTableView (frame: self.view.frame,
-            numberOfSections: 1,
             numberOfRowsInSection: { (section) -> Int in
                 return dataSource.count
             },
@@ -35,12 +34,16 @@ Initilizers
 --------------
 
     init(frame: CGRect,
-        numberOfSections: Int,
         numberOfRowsInSection: (section: Int) -> Int,
         cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
         didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> ())
 
-
+    init(frame: CGRect,
+        numberOfSections: Int,
+        numberOfRowsInSection: (section: Int) -> Int,
+        titleForHeaderInSection : (section: Int) -> String,
+        cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
+        didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> ())
         
     init(frame: CGRect,
         numberOfSections: Int,
@@ -48,5 +51,14 @@ Initilizers
         cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
         didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> (),
         heightForCellAtIndexPath: (indexPath: NSIndexPath)->CGFloat)
+
+    init(frame: CGRect,
+        numberOfSections: Int,
+        numberOfRowsInSection: (section: Int) -> Int,
+        titleForHeaderInSection: (section: Int) -> String,
+        cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
+        didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> (),
+        heightForCellAtIndexPath: (indexPath: NSIndexPath)->CGFloat)
+
 
 * You can easily add more initilizers with more UITableViewDelegate/UITableViewDataSource methods
