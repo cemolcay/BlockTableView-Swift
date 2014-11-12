@@ -7,7 +7,7 @@ single line UITableView creation in Swift with power of the closures
 Usage
 -----
 
-Copy & paste BlockTableView.swift into your project. <br>
+Copy & paste `BlockTableView.swift` into your project. <br>
 
         let table = BlockTableView (frame: self.view.frame,
             numberOfRowsInSection: { (section) -> Int in
@@ -61,4 +61,4 @@ Initilizers
         heightForCellAtIndexPath: (indexPath: NSIndexPath)->CGFloat)
 
 
-* You can easily add more initilizers with more UITableViewDelegate/UITableViewDataSource methods
+* You can easily add more initilizers with more `UITableViewDelegate`/`UITableViewDataSource` methods
