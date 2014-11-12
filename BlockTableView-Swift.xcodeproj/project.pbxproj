@@ -13,6 +13,7 @@
 		B24AF9F81A136E1900739AF5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B24AF9F71A136E1900739AF5 /* Images.xcassets */; };
 		B24AF9FB1A136E1900739AF5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B24AF9F91A136E1900739AF5 /* LaunchScreen.xib */; };
 		B24AFA071A136E1900739AF5 /* BlockTableView_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24AFA061A136E1900739AF5 /* BlockTableView_SwiftTests.swift */; };
+		B24AFA111A136E3100739AF5 /* BlockTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24AFA101A136E3100739AF5 /* BlockTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		B24AFA001A136E1900739AF5 /* BlockTableView-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BlockTableView-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24AFA051A136E1900739AF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B24AFA061A136E1900739AF5 /* BlockTableView_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockTableView_SwiftTests.swift; sourceTree = "<group>"; };
+		B24AFA101A136E3100739AF5 /* BlockTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				B24AF9F01A136E1900739AF5 /* AppDelegate.swift */,
 				B24AF9F21A136E1900739AF5 /* ViewController.swift */,
+				B24AFA101A136E3100739AF5 /* BlockTableView.swift */,
 				B24AF9F41A136E1900739AF5 /* Main.storyboard */,
 				B24AF9F71A136E1900739AF5 /* Images.xcassets */,
 				B24AF9F91A136E1900739AF5 /* LaunchScreen.xib */,
@@ -214,6 +217,7 @@
 			files = (
 				B24AF9F31A136E1900739AF5 /* ViewController.swift in Sources */,
 				B24AF9F11A136E1900739AF5 /* AppDelegate.swift in Sources */,
+				B24AFA111A136E3100739AF5 /* BlockTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
