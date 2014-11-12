@@ -14,12 +14,11 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     // MARK: Init
     
     init(frame: CGRect,
-        numberOfSections: Int,
         numberOfRowsInSection: (section: Int) -> Int,
         cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
         didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> ()) {
             
-            self.numberOfSections = numberOfSections
+            self.numberOfSections = 1
             self.numberOfRowsInSection = numberOfRowsInSection
             self.cellForRowAtIndexPath = cellForRowAtIndexPath
             self.didSelectRowAtIndexPath = didSelectRowAtIndexPath

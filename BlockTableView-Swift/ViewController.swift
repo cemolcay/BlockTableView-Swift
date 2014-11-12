@@ -12,8 +12,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         createSingleSectionTableView()
-//        createMultiSectionTableView()
+        //createMultiSectionTableView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,7 +34,6 @@ class ViewController: UIViewController {
         
         // Create BlockTableView
         let table = BlockTableView (frame: self.view.frame,
-            numberOfSections: 1,
             numberOfRowsInSection: { (section) -> Int in
                 return dataSource.count
             },
