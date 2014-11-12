@@ -12,7 +12,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        createMultiSectionTableView()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func createSingleSectionTableView () {
         
         // Setup data source
         var dataSource : [String] = []
@@ -36,24 +45,54 @@ class ViewController: UIViewController {
                 return cell
             },
             didSelectRowAtIndexPath: { (tableView, indexPath) -> () in
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                
                 let selected = dataSource[indexPath.row]
                 println("\(selected) selected")
-                
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
         )
         
         
         // Add table to view
         self.view.addSubview(table)
+    }
+    
+    func createMultiSectionTableView () {
         
+        // Setup data source
+        var dataSource : [String:[String]] = [
+            "Section 1":["Cell 1", "Cell 2", "Cell 3", "Cell 4"],
+            "Section 2":["Cell 1", "Cell 2", "Cell 3", "Cell 4", "Cell 5"],
+            "Section 3":["Cell 1", "Cell 2", "Cell 3"]
+        ]
+        
+        // Create BlockTableView
+        let table = BlockTableView (frame: self.view.frame,
+            numberOfSections: dataSource.count,
+            numberOfRowsInSection: { (section) -> Int in
+                dataSource.values.array[section].count
+            },
+            titleForHeaderInSection: { (section) -> String in
+                return dataSource.keys.array[section]
+            },
+            cellForRowAtIndexPath: { (tableView, indexPath) -> UITableViewCell in
+                var cell = UITableViewCell (style: .Default, reuseIdentifier: "Identifer")
+                
+                let current = dataSource.values.array[indexPath.section][indexPath.row]
+                cell.textLabel.text = current
+                
+                return cell
+            },
+            didSelectRowAtIndexPath: { (tableView, indexPath) -> () in
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                
+                let selected = dataSource.values.array[indexPath.section][indexPath.row]
+                println("\(selected) selected")
+            }
+        )
+        
+        // Add table to view
+        self.view.addSubview(table)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 

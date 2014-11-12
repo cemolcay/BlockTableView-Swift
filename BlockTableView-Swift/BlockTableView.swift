@@ -32,12 +32,50 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     init(frame: CGRect,
         numberOfSections: Int,
         numberOfRowsInSection: (section: Int) -> Int,
+        titleForHeaderInSection : (section: Int) -> String,
+        cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
+        didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> ()) {
+            
+            self.numberOfSections = numberOfSections
+            self.numberOfRowsInSection = numberOfRowsInSection
+            self.titleForHeaderInSection = titleForHeaderInSection
+            self.cellForRowAtIndexPath = cellForRowAtIndexPath
+            self.didSelectRowAtIndexPath = didSelectRowAtIndexPath
+            
+            super.init(frame: frame, style: UITableViewStyle.Plain)
+            dataSource = self
+            delegate = self
+    }
+    
+    init(frame: CGRect,
+        numberOfSections: Int,
+        numberOfRowsInSection: (section: Int) -> Int,
         cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
         didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> (),
         heightForCellAtIndexPath: (indexPath: NSIndexPath)->CGFloat) {
             
             self.numberOfSections = numberOfSections
             self.numberOfRowsInSection = numberOfRowsInSection
+            self.cellForRowAtIndexPath = cellForRowAtIndexPath
+            self.didSelectRowAtIndexPath = didSelectRowAtIndexPath
+            self.heightForCellAtIndexPath = heightForCellAtIndexPath
+            
+            super.init(frame: frame, style: UITableViewStyle.Plain)
+            dataSource = self
+            delegate = self
+    }
+    
+    init(frame: CGRect,
+        numberOfSections: Int,
+        numberOfRowsInSection: (section: Int) -> Int,
+        titleForHeaderInSection: (section: Int) -> String,
+        cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
+        didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> (),
+        heightForCellAtIndexPath: (indexPath: NSIndexPath)->CGFloat) {
+            
+            self.numberOfSections = numberOfSections
+            self.numberOfRowsInSection = numberOfRowsInSection
+            self.titleForHeaderInSection = titleForHeaderInSection
             self.cellForRowAtIndexPath = cellForRowAtIndexPath
             self.didSelectRowAtIndexPath = didSelectRowAtIndexPath
             self.heightForCellAtIndexPath = heightForCellAtIndexPath
@@ -60,7 +98,7 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     var cellForRowAtIndexPath    : ((UITableView, NSIndexPath)->UITableViewCell)?
     var didSelectRowAtIndexPath  : ((UITableView, NSIndexPath)->())?
     var heightForCellAtIndexPath : ((NSIndexPath)->CGFloat)?
-    
+    var titleForHeaderInSection  : ((Int)->String)?
     
     
     // MARK: UITableViewDataSource
@@ -75,6 +113,15 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return cellForRowAtIndexPath! (tableView, indexPath)
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let title = titleForHeaderInSection? (section) {
+            return title
+        }
+        else {
+            return ""
+        }
     }
     
     
