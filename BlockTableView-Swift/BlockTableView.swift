@@ -13,91 +13,94 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: Init
     
-    init(frame: CGRect,
-        numberOfRowsInSection: (section: Int) -> Int,
-        cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
-        didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> ()) {
-            
-            self.numberOfSections = 1
-            self.numberOfRowsInSection = numberOfRowsInSection
-            self.cellForRowAtIndexPath = cellForRowAtIndexPath
-            self.didSelectRowAtIndexPath = didSelectRowAtIndexPath
-            
-            super.init(frame: frame, style: UITableViewStyle.Plain)
-            dataSource = self
-            delegate = self
-    }
-    
-    init(frame: CGRect,
-        numberOfSections: Int,
-        numberOfRowsInSection: (section: Int) -> Int,
-        titleForHeaderInSection : (section: Int) -> String,
-        cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
-        didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> ()) {
-            
-            self.numberOfSections = numberOfSections
-            self.numberOfRowsInSection = numberOfRowsInSection
-            self.titleForHeaderInSection = titleForHeaderInSection
-            self.cellForRowAtIndexPath = cellForRowAtIndexPath
-            self.didSelectRowAtIndexPath = didSelectRowAtIndexPath
-            
-            super.init(frame: frame, style: UITableViewStyle.Plain)
-            dataSource = self
-            delegate = self
-    }
-    
-    init(frame: CGRect,
-        numberOfSections: Int,
-        numberOfRowsInSection: (section: Int) -> Int,
-        cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
-        didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> (),
-        heightForCellAtIndexPath: (indexPath: NSIndexPath)->CGFloat) {
-            
-            self.numberOfSections = numberOfSections
-            self.numberOfRowsInSection = numberOfRowsInSection
-            self.cellForRowAtIndexPath = cellForRowAtIndexPath
-            self.didSelectRowAtIndexPath = didSelectRowAtIndexPath
-            self.heightForCellAtIndexPath = heightForCellAtIndexPath
-            
-            super.init(frame: frame, style: UITableViewStyle.Plain)
-            dataSource = self
-            delegate = self
-    }
-    
-    init(frame: CGRect,
-        numberOfSections: Int,
-        numberOfRowsInSection: (section: Int) -> Int,
-        titleForHeaderInSection: (section: Int) -> String,
-        cellForRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
-        didSelectRowAtIndexPath: (tableView: UITableView, indexPath: NSIndexPath) -> (),
-        heightForCellAtIndexPath: (indexPath: NSIndexPath)->CGFloat) {
-            
-            self.numberOfSections = numberOfSections
-            self.numberOfRowsInSection = numberOfRowsInSection
-            self.titleForHeaderInSection = titleForHeaderInSection
-            self.cellForRowAtIndexPath = cellForRowAtIndexPath
-            self.didSelectRowAtIndexPath = didSelectRowAtIndexPath
-            self.heightForCellAtIndexPath = heightForCellAtIndexPath
-            
-            super.init(frame: frame, style: UITableViewStyle.Plain)
-            dataSource = self
-            delegate = self
-    }
-    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     
+    convenience init(frame: CGRect,
+        numberOfRowsInSection   : (section: Int) -> Int,
+        cellForRowAtIndexPath   : (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
+        didSelectRowAtIndexPath : (tableView: UITableView, indexPath: NSIndexPath) -> ()) {
+        
+        self.init (frame: frame,
+            registeredCells: ["Cell": UITableViewCell.self],
+            numberOfSections: 1,
+            titleForHeaderInSection: nil,
+            numberOfRowsInSection: numberOfRowsInSection,
+            cellForRowAtIndexPath: cellForRowAtIndexPath,
+            didSelectRowAtIndexPath: didSelectRowAtIndexPath)
+    }
     
+    
+    convenience init(frame: CGRect,
+        numberOfSections        : Int,
+        titleForHeaderInSection : (section: Int) -> String,
+        numberOfRowsInSection   : (section: Int) -> Int,
+        cellForRowAtIndexPath   : (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
+        didSelectRowAtIndexPath : (tableView: UITableView, indexPath: NSIndexPath) -> ()) {
+            
+        self.init (frame: frame,
+            registeredCells: ["Cell": UITableViewCell.self],
+            numberOfSections: numberOfSections,
+            titleForHeaderInSection: titleForHeaderInSection,
+            numberOfRowsInSection: numberOfRowsInSection,
+            cellForRowAtIndexPath: cellForRowAtIndexPath,
+            didSelectRowAtIndexPath: didSelectRowAtIndexPath)
+    }
+    
+    
+    convenience init(frame: CGRect,
+        registeredCells         : [String: AnyClass],
+        numberOfRowsInSection   : (section: Int) -> Int,
+        cellForRowAtIndexPath   : (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
+        didSelectRowAtIndexPath : (tableView: UITableView, indexPath: NSIndexPath) -> ()) {
+        
+        self.init (frame: frame,
+            registeredCells: registeredCells,
+            numberOfSections: 1,
+            titleForHeaderInSection: nil,
+            numberOfRowsInSection: numberOfRowsInSection,
+            cellForRowAtIndexPath: cellForRowAtIndexPath,
+            didSelectRowAtIndexPath: didSelectRowAtIndexPath)
+    }
+    
+    
+    init(frame: CGRect,
+        registeredCells         : [String: AnyClass]?,
+        numberOfSections        : Int?,
+        titleForHeaderInSection : ((section: Int) -> String)?,
+        numberOfRowsInSection   : ((section: Int) -> Int)?,
+        cellForRowAtIndexPath   : ((tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell)?,
+        didSelectRowAtIndexPath : ((tableView: UITableView, indexPath: NSIndexPath) -> ())?) {
+
+        self.registeredCells = registeredCells
+        self.numberOfSections = numberOfSections
+        self.numberOfRowsInSection = numberOfRowsInSection
+        self.titleForHeaderInSection = titleForHeaderInSection
+        self.cellForRowAtIndexPath = cellForRowAtIndexPath
+        self.didSelectRowAtIndexPath = didSelectRowAtIndexPath
+
+        super.init(frame: frame, style: UITableViewStyle.Plain)
+        dataSource = self
+        delegate = self
+
+        for (key, value) in registeredCells! {
+            registerClass(value, forCellReuseIdentifier: key)
+        }
+    }
+        
+    
+
     // MARK: Block
-    
-    var numberOfSections         : Int?
-    var numberOfRowsInSection    : ((Int)->Int)?
-    var cellForRowAtIndexPath    : ((UITableView, NSIndexPath)->UITableViewCell)?
-    var didSelectRowAtIndexPath  : ((UITableView, NSIndexPath)->())?
-    var heightForCellAtIndexPath : ((NSIndexPath)->CGFloat)?
-    var titleForHeaderInSection  : ((Int)->String)?
+
+    var registeredCells         : [String: AnyClass]?
+    var numberOfSections        : Int?
+    var titleForHeaderInSection : ((Int)->String)?
+    var numberOfRowsInSection   : ((Int)->Int)?
+    var cellForRowAtIndexPath   : ((UITableView, NSIndexPath)->UITableViewCell)?
+    var didSelectRowAtIndexPath : ((UITableView, NSIndexPath)->())?
+
     
     
     // MARK: UITableViewDataSource
@@ -129,13 +132,5 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         didSelectRowAtIndexPath! (tableView, indexPath)
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if let height = heightForCellAtIndexPath? (indexPath) {
-            return height
-        } else {
-            return 44
-        }
     }
 }

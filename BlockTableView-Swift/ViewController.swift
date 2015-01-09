@@ -27,21 +27,22 @@ class ViewController: UIViewController {
         
         // Setup data source
         var dataSource : [String] = []
-        for i in 1...20 {
+        for i in 1...220 {
             dataSource.append("cell \(i)")
         }
         
         
         // Create BlockTableView
         let table = BlockTableView (frame: self.view.frame,
+            registeredCells: ["asd": UITableViewCell.self],
             numberOfRowsInSection: { (section) -> Int in
                 return dataSource.count
             },
             cellForRowAtIndexPath: { (tableView, indexPath) -> UITableViewCell in
-                var cell = UITableViewCell (style: .Default, reuseIdentifier: "Identifer")
+                var cell = tableView.dequeueReusableCellWithIdentifier("asd", forIndexPath: indexPath) as UITableViewCell
                 
                 let current = dataSource[indexPath.row]
-                cell.textLabel.text = current
+                cell.textLabel?.text = current
                 
                 return cell
             },
@@ -70,17 +71,17 @@ class ViewController: UIViewController {
         // Create BlockTableView
         let table = BlockTableView (frame: self.view.frame,
             numberOfSections: dataSource.count,
-            numberOfRowsInSection: { (section) -> Int in
-                dataSource.values.array[section].count
-            },
             titleForHeaderInSection: { (section) -> String in
                 return dataSource.keys.array[section]
             },
+            numberOfRowsInSection: { (section) -> Int in
+                dataSource.values.array[section].count
+            },
             cellForRowAtIndexPath: { (tableView, indexPath) -> UITableViewCell in
-                var cell = UITableViewCell (style: .Default, reuseIdentifier: "Identifer")
+                var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
                 
                 let current = dataSource.values.array[indexPath.section][indexPath.row]
-                cell.textLabel.text = current
+                cell.textLabel?.text = current
                 
                 return cell
             },
