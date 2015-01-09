@@ -70,9 +70,9 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         registeredCells         : [String: AnyClass]?,
         numberOfSections        : Int?,
         titleForHeaderInSection : ((section: Int) -> String)?,
-        numberOfRowsInSection   : ((section: Int) -> Int)?,
-        cellForRowAtIndexPath   : ((tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell)?,
-        didSelectRowAtIndexPath : ((tableView: UITableView, indexPath: NSIndexPath) -> ())?) {
+        numberOfRowsInSection   : (section: Int) -> Int,
+        cellForRowAtIndexPath   : (tableView: UITableView, indexPath: NSIndexPath) -> UITableViewCell,
+        didSelectRowAtIndexPath : (tableView: UITableView, indexPath: NSIndexPath) -> ()) {
 
         self.registeredCells = registeredCells
         self.numberOfSections = numberOfSections
