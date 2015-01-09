@@ -159,12 +159,12 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource, U
     
     var searchController: UISearchController?
     var searchResultsViewController: BlockTableViewController?
-    var searchResultsFiltering: ((String)->[AnyObject])?
+    var didSearchTextChanged: ((String)->Void)?
     
-    func addSearchBar (filtering: (searchText: String?)->BlockTableView) {
+    func addSearchBar (searchResultTableView tableView: BlockTableView,  didSearch: (String)->()) {
         
-        searchResultsViewController = BlockTableViewController (blockTableView:
-            filtering (searchText:searchController?.searchBar.text))
+        didSearchTextChanged = didSearch
+        searchResultsViewController = BlockTableViewController (blockTableView: tableView)
         
         searchController = UISearchController(searchResultsController: searchResultsViewController)
         searchController?.searchResultsUpdater = self
@@ -177,9 +177,7 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource, U
     // MARK: UISearchResultsUpdatingDelegate
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        println("updating")
-        println(searchController.searchBar.text)
-        
+        didSearchTextChanged? (searchController.searchBar.text)
         searchResultsViewController?.tableView.reloadData()
     }
 }

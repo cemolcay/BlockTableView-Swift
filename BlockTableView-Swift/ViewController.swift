@@ -16,12 +16,6 @@ class ViewController: UIViewController {
         createSingleSectionTableView()
         //createMultiSectionTableView()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     func createSingleSectionTableView () {
         
@@ -55,21 +49,27 @@ class ViewController: UIViewController {
             }
         )
         
+        // add a search bar
+        var filtered: [String]! // search result dataSource
         
-        table.addSearchBar { (searchText) -> BlockTableView in
-            let filtered = filter (dataSource) { searchText != nil && $0.rangeOfString(searchText!) != nil }
-            
-            return BlockTableView (frame: self.view.frame,
+        table.addSearchBar(searchResultTableView:
+            BlockTableView (frame: self.view.frame,
                 numberOfRowsInSection: { (section) -> Int in
                     return filtered.count
-                }, cellForRowAtIndexPath: { (tableView, indexPath) -> UITableViewCell in
+                },
+                cellForRowAtIndexPath: { (tableView, indexPath) -> UITableViewCell in
                     var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
                     cell.textLabel?.text = filtered[indexPath.row]
                     return cell
-                }, didSelectRowAtIndexPath: { (tableView, indexPath) -> () in
+                },
+                didSelectRowAtIndexPath: { (tableView, indexPath) -> () in
                     return
-                })
-        }
+                }
+            ), didSearch: { searchText in
+                filtered = filter (dataSource) { $0.rangeOfString(searchText) != nil }
+            }
+        )
+        
         
         // Add table to view
         self.view.addSubview(table)
