@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         createSingleSectionTableView()
-        createMultiSectionTableView()
+        //createMultiSectionTableView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,6 +55,21 @@ class ViewController: UIViewController {
             }
         )
         
+        
+        table.addSearchBar { (searchText) -> BlockTableView in
+            let filtered = filter (dataSource) { searchText != nil && $0.rangeOfString(searchText!) != nil }
+            
+            return BlockTableView (frame: self.view.frame,
+                numberOfRowsInSection: { (section) -> Int in
+                    return filtered.count
+                }, cellForRowAtIndexPath: { (tableView, indexPath) -> UITableViewCell in
+                    var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+                    cell.textLabel?.text = filtered[indexPath.row]
+                    return cell
+                }, didSelectRowAtIndexPath: { (tableView, indexPath) -> () in
+                    return
+                })
+        }
         
         // Add table to view
         self.view.addSubview(table)

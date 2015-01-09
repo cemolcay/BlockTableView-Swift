@@ -8,7 +8,23 @@
 
 import UIKit
 
-class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
+class BlockTableViewController: UITableViewController {
+
+    init (blockTableView: BlockTableView) {
+        super.init(style: .Plain)
+        tableView = blockTableView
+    }
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
+
+class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating {
     
     
     // MARK: Init
@@ -106,7 +122,7 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
 
     
     
-    // MARK: UITableViewDataSource
+    // MARK: - UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return numberOfSections!
@@ -135,5 +151,35 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         didSelectRowAtIndexPath! (tableView, indexPath)
+    }
+
+
+    
+    // MARK: - Search
+    
+    var searchController: UISearchController?
+    var searchResultsViewController: BlockTableViewController?
+    var searchResultsFiltering: ((String)->[AnyObject])?
+    
+    func addSearchBar (filtering: (searchText: String?)->BlockTableView) {
+        
+        searchResultsViewController = BlockTableViewController (blockTableView:
+            filtering (searchText:searchController?.searchBar.text))
+        
+        searchController = UISearchController(searchResultsController: searchResultsViewController)
+        searchController?.searchResultsUpdater = self
+        searchController?.searchBar.sizeToFit()
+        tableHeaderView = searchController?.searchBar
+    }
+    
+    
+    
+    // MARK: UISearchResultsUpdatingDelegate
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        println("updating")
+        println(searchController.searchBar.text)
+        
+        searchResultsViewController?.tableView.reloadData()
     }
 }
