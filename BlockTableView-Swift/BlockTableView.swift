@@ -84,6 +84,9 @@ class BlockTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         super.init(frame: frame, style: UITableViewStyle.Plain)
         dataSource = self
         delegate = self
+            
+        estimatedRowHeight = 60
+        rowHeight = UITableViewAutomaticDimension
 
         for (key, value) in registeredCells! {
             registerClass(value, forCellReuseIdentifier: key)

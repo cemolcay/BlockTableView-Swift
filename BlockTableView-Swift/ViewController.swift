@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         createSingleSectionTableView()
-        //createMultiSectionTableView()
+        createMultiSectionTableView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         
         // Setup data source
         var dataSource : [String] = []
-        for i in 1...220 {
+        for i in 1...20 {
             dataSource.append("cell \(i)")
         }
         
@@ -43,6 +43,7 @@ class ViewController: UIViewController {
                 
                 let current = dataSource[indexPath.row]
                 cell.textLabel?.text = current
+                cell.textLabel?.numberOfLines = 0
                 
                 return cell
             },
