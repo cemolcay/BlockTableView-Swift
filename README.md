@@ -3,10 +3,19 @@ BlockTableView-Swift
 
 single line UITableView creation in Swift with power of the closures  
 
-Usage
------
+Installation
+------------
+
+#### Manual
 
 Copy & paste `BlockTableView.swift` into your project. <br>
+
+#### Cocoapods
+
+        pod "BlockTableView", "~> 0.1"
+        
+Usage
+-----
 
         let table = BlockTableView (frame: self.view.frame,
             numberOfRowsInSection: { (section) -> Int in
