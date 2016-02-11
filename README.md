@@ -10,7 +10,7 @@ Installation
 
 Copy & paste `BlockTableView.swift` into your project. <br>
 
-#### Cocoapods
+#### CocoaPods
 
         pod "BlockTableView", "~> 0.1"
         
